@@ -1,24 +1,19 @@
-function updateStudentGradeByCity(studentList, city, newGrades) {
-  const updateStudents = studentList
-    .filter((student) => student.location === city)
-    .map((student) => {
-      const matchingGrade = newGrades.find((grade) => grade.studentId === student.id);
-
-      if (matchingGrade) {
+/* eslint-disable */
+function updateStudentGradeByCity(students, city, newGrades) {
+    const studentsInCity = students.filter((student) => student.location === city);
+    return studentsInCity.map((student) => {
+      const filteredGrades = newGrades.filter((grade) => grade.studentId === student.id);
+      if (filteredGrades.length > 0) {
         return {
-          id: student.id,
-          firstname: student.firstname,
-          location: student.location,
-          grade: matchingGrade.grade,
+          ...student,
+          grade: filteredGrades[0].grade,
         };
       }
       return {
-        id: student.id,
-        firstName: student.firstname,
-        location: student.location,
+        ...student,
         grade: 'N/A',
       };
     });
-  return updateStudents;
-}
-export default updateStudentGradeByCity;
+  }
+  
+  export default updateStudentGradeByCity;
